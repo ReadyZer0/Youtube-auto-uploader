@@ -18,8 +18,8 @@ export interface AppConfig {
 
 // OAuth2 credentials fetched from environment variables at build-time.
 // These are sourced from the .env file (not committed to Git).
-const MASTER_CLIENT_ID = import.meta.env.MAIN_VITE_GOOGLE_CLIENT_ID || ''
-const MASTER_CLIENT_SECRET = import.meta.env.MAIN_VITE_GOOGLE_CLIENT_SECRET || ''
+const MASTER_CLIENT_ID = (import.meta.env as any).MAIN_VITE_GOOGLE_CLIENT_ID || ''
+const MASTER_CLIENT_SECRET = (import.meta.env as any).MAIN_VITE_GOOGLE_CLIENT_SECRET || ''
 
 const schema: any = {
   clientId: { type: 'string', default: MASTER_CLIENT_ID },

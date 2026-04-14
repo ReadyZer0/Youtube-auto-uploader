@@ -14,3 +14,4 @@ page.html
 
 # Allow dedicated installer files
 !dist/*.exe
+!dist/*.zip
