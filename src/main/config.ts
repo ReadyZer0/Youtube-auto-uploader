@@ -24,8 +24,8 @@ const MASTER_CLIENT_SECRET = (import.meta.env as any).MAIN_VITE_GOOGLE_CLIENT_SE
 const schema: any = {
   clientId: { type: 'string', default: MASTER_CLIENT_ID },
   clientSecret: { type: 'string', default: MASTER_CLIENT_SECRET },
-  tokens: { type: 'object', default: null },
-  profile: { type: 'object', default: null },
+  tokens: { type: ['object', 'null'], default: null },
+  profile: { type: ['object', 'null'], default: null },
   watchFolder: { type: 'string', default: '' },
   keywords: { type: 'array', items: { type: 'string' }, default: ['highlight'] },
   privacyStatus: { type: 'string', enum: ['private', 'unlisted', 'public'], default: 'private' },
