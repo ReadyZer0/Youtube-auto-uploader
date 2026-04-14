@@ -14,14 +14,9 @@ export interface AppConfig {
   history: string[] // list of uploaded absolute file paths
 }
 
-// Credentials are loaded from .env file (never committed to git)
-// See .env.example for the template
-const MASTER_CLIENT_ID = import.meta.env.MAIN_VITE_GOOGLE_CLIENT_ID || ''
-const MASTER_CLIENT_SECRET = import.meta.env.MAIN_VITE_GOOGLE_CLIENT_SECRET || ''
-
 const schema: any = {
-  clientId: { type: 'string', default: MASTER_CLIENT_ID },
-  clientSecret: { type: 'string', default: MASTER_CLIENT_SECRET },
+  clientId: { type: 'string', default: '' },
+  clientSecret: { type: 'string', default: '' },
   tokens: { type: 'object', default: null },
   watchFolder: { type: 'string', default: '' },
   keywords: { type: 'array', items: { type: 'string' }, default: ['highlight'] },
@@ -40,11 +35,28 @@ const schema: any = {
 
 export const store = new Store<AppConfig>({ schema })
 
-// Ensure that even if the store is empty, we return the master keys
+// Credentials are loaded from .env file (never committed to git).
+// See .env.example for the template.
+// Priority: store (user-saved) > .env file > empty (user must configure)
 export function getConfig(): AppConfig {
   const current = store.store
-  if (!current.clientId) current.clientId = MASTER_CLIENT_ID
-  if (!current.clientSecret) current.clientSecret = MASTER_CLIENT_SECRET
+
+  // If the store doesn't have credentials yet, try loading from .env
+  if (!current.clientId) {
+    const envId = import.meta.env.MAIN_VITE_GOOGLE_CLIENT_ID || ''
+    if (envId) {
+      store.set('clientId', envId)
+      current.clientId = envId
+    }
+  }
+  if (!current.clientSecret) {
+    const envSecret = import.meta.env.MAIN_VITE_GOOGLE_CLIENT_SECRET || ''
+    if (envSecret) {
+      store.set('clientSecret', envSecret)
+      current.clientSecret = envSecret
+    }
+  }
+
   return current
 }
 

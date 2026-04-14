@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import Dashboard from './components/Dashboard'
 import SettingsPage from './components/Settings'
 import AuthPage from './components/Auth'
