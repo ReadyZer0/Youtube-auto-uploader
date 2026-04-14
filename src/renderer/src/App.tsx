@@ -5,7 +5,7 @@ import SettingsPage from './components/Settings'
 import AuthPage from './components/Auth'
 import DonateModal from './components/DonateModal'
 import LogoImage from './assets/icon.png'
-import { LayoutDashboard, Settings, Key, Linkedin, Heart } from 'lucide-react'
+import { LayoutDashboard, Settings, Key, ExternalLink, Heart } from 'lucide-react'
 
 const App = () => {
   const [activeTab, setActiveTab] = useState('dashboard')
@@ -45,6 +45,8 @@ const App = () => {
           <span>Ready Auto YT</span>
         </div>
         
+        <div className="sidebar-section-label">Main</div>
+        
         <div 
           className={`nav-item ${activeTab === 'dashboard' ? 'active' : ''}`}
           onClick={() => setActiveTab('dashboard')}
@@ -69,27 +71,27 @@ const App = () => {
           YouTube Auth
         </div>
 
-        <div style={{ marginTop: 'auto', padding: '0 16px' }}>
-          <div 
-            className="nav-item"
-            style={{ color: '#0077B5', opacity: 0.9 }}
-            onClick={() => window.open('https://iq.linkedin.com/in/ali-dheyaa-abdulwahab-6bbbb1239', '_blank')}
-          >
-            <Linkedin size={20} />
-            Connect LinkedIn
-          </div>
-
-          <div 
-            className="nav-item"
-            style={{ color: 'var(--primary)', fontWeight: 700 }}
-            onClick={() => setIsDonateOpen(true)}
-          >
-            <Heart size={20} fill="var(--primary)" />
-            Support Dev
-          </div>
+        <div style={{ marginTop: '24px' }} className="sidebar-section-label">Support & Social</div>
+        
+        <div 
+          className="nav-item"
+          style={{ color: '#0077B5' }}
+          onClick={() => window.open('https://iq.linkedin.com/in/ali-dheyaa-abdulwahab-6bbbb1239', '_blank')}
+        >
+          <ExternalLink size={20} />
+          LinkedIn
         </div>
 
-        <div style={{ padding: '20px 24px' }}>
+        <div 
+          className="nav-item"
+          style={{ color: 'var(--primary)' }}
+          onClick={() => setIsDonateOpen(true)}
+        >
+          <Heart size={20} fill={isDonateOpen ? 'var(--primary)' : 'none'} />
+          Support Dev
+        </div>
+
+        <div style={{ marginTop: 'auto', padding: '20px 24px' }}>
           <div style={{ 
             display: 'flex', 
             alignItems: 'center', 

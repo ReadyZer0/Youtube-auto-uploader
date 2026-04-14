@@ -19,11 +19,11 @@ const Auth = ({ authenticated, onAuthSuccess }: { authenticated: boolean, onAuth
     return () => clearTimeout(timeout)
   }, [authenticated])
 
-  const loadChannelInfo = async () => {
+  const loadChannelInfo = async (force = false) => {
     if (!(window as any).api) return
     try {
       setError(null)
-      const info = await (window as any).api.getChannelInfo()
+      const info = await (window as any).api.getChannelInfo(force)
       if (info) {
         setChannelName(info.title)
         setThumbnail(info.thumbnail)
@@ -90,7 +90,7 @@ const Auth = ({ authenticated, onAuthSuccess }: { authenticated: boolean, onAuth
                 display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#222'
               }}>
                 {thumbnail ? (
-                  <img src={thumbnail} alt="Channel" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={thumbnail} crossOrigin="anonymous" alt="Channel" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 ) : (
                   <User size={48} color="var(--success)" />
                 )}
@@ -114,7 +114,7 @@ const Auth = ({ authenticated, onAuthSuccess }: { authenticated: boolean, onAuth
               
               {!channelName && (
                 <button 
-                  onClick={loadChannelInfo}
+                  onClick={() => loadChannelInfo(true)}
                   style={{ 
                     background: 'none', border: 'none', color: 'var(--primary)', 
                     cursor: 'pointer', fontSize: '12px', textDecoration: 'underline',

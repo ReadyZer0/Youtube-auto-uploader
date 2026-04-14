@@ -11,3 +11,6 @@ tsc_out.txt
 build_log.txt
 puppet_scr.png
 page.html
+
+# Allow dedicated installer files
+!dist/*.exe

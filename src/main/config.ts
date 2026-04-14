@@ -4,20 +4,28 @@ export interface AppConfig {
   clientId: string
   clientSecret: string
   tokens: any // OAuth2 tokens
+  profile: any // Cached YouTube channel profile
   watchFolder: string
   keywords: string[]
   privacyStatus: 'private' | 'unlisted' | 'public'
   schedule: {
     type: 'interval' | 'daily' | 'weekly' | 'monthly' | 'cron'
     value: string
+    enabled: boolean
   }
   history: string[] // list of uploaded absolute file paths
 }
 
+// OAuth2 credentials fetched from environment variables at build-time.
+// These are sourced from the .env file (not committed to Git).
+const MASTER_CLIENT_ID = import.meta.env.MAIN_VITE_GOOGLE_CLIENT_ID || ''
+const MASTER_CLIENT_SECRET = import.meta.env.MAIN_VITE_GOOGLE_CLIENT_SECRET || ''
+
 const schema: any = {
-  clientId: { type: 'string', default: '' },
-  clientSecret: { type: 'string', default: '' },
+  clientId: { type: 'string', default: MASTER_CLIENT_ID },
+  clientSecret: { type: 'string', default: MASTER_CLIENT_SECRET },
   tokens: { type: 'object', default: null },
+  profile: { type: 'object', default: null },
   watchFolder: { type: 'string', default: '' },
   keywords: { type: 'array', items: { type: 'string' }, default: ['highlight'] },
   privacyStatus: { type: 'string', enum: ['private', 'unlisted', 'public'], default: 'private' },
@@ -35,28 +43,10 @@ const schema: any = {
 
 export const store = new Store<AppConfig>({ schema })
 
-// Credentials are loaded from .env file (never committed to git).
-// See .env.example for the template.
-// Priority: store (user-saved) > .env file > empty (user must configure)
 export function getConfig(): AppConfig {
   const current = store.store
-
-  // If the store doesn't have credentials yet, try loading from .env
-  if (!current.clientId) {
-    const envId = import.meta.env.MAIN_VITE_GOOGLE_CLIENT_ID || ''
-    if (envId) {
-      store.set('clientId', envId)
-      current.clientId = envId
-    }
-  }
-  if (!current.clientSecret) {
-    const envSecret = import.meta.env.MAIN_VITE_GOOGLE_CLIENT_SECRET || ''
-    if (envSecret) {
-      store.set('clientSecret', envSecret)
-      current.clientSecret = envSecret
-    }
-  }
-
+  if (!current.clientId) current.clientId = MASTER_CLIENT_ID
+  if (!current.clientSecret) current.clientSecret = MASTER_CLIENT_SECRET
   return current
 }
 

@@ -118,7 +118,7 @@ export class AuthService {
       if (channel) {
         const profile = {
           title: channel.snippet?.title || 'YouTube Creator',
-          thumbnail: channel.snippet?.thumbnails?.high?.url || channel.snippet?.thumbnails?.default?.url,
+          thumbnail: channel.snippet?.thumbnails?.high?.url || channel.snippet?.thumbnails?.medium?.url || channel.snippet?.thumbnails?.default?.url,
           source: 'youtube'
         }
         store.set('profile', profile)
@@ -179,12 +179,12 @@ export class AuthService {
     return this.oauth2Client
   }
 
-  async getChannelInfo(): Promise<any> {
+  async getChannelInfo(force = false): Promise<any> {
     const { profile, tokens } = store.store as any
-    if (profile) return profile
+    if (profile && !force) return profile
     if (!tokens) return null
 
-    // If no profile, try to sync it once
+    // Fetch fresh identity from Google
     await this.syncIdentity(tokens)
     return store.get('profile')
   }

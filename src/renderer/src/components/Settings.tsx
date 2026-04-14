@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Save, Folder, Hash, Globe, Bell, Shield, Clock, Calendar, ExternalLink, ShieldCheck, CheckCircle2, Zap } from 'lucide-react'
+import { Save, Folder, Hash, Globe, Bell, Shield, Clock, Calendar, ExternalLink, ShieldCheck, Zap } from 'lucide-react'
 import { motion } from 'framer-motion'
 
 const Settings = ({ config, onChange }: { config: any, onChange: (cfg: any) => void }) => {

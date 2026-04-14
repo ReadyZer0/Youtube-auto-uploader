@@ -1,5 +1,5 @@
-appId: com.electron.app
-productName: youtube-auto-uploader
+appId: com.ready.autouploader
+productName: Ready Auto YT
 directories:
   buildResources: build
 files:
@@ -12,7 +12,8 @@ files:
 asarUnpack:
   - resources/**
 win:
-  executableName: youtube-auto-uploader
+  executableName: ReadyAutoYT
+  icon: build/icon.ico
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}

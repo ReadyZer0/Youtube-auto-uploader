@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Heart, Copy, ExternalLink, X, CreditCard, Wallet, QrCode, Globe } from 'lucide-react'
+import SuperQiQR from '../assets/super_qi_qr.jpg'
+import UsdtQR from '../assets/usdt_qr.jpg'
 
 const DonateModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
   const [activeTab, setActiveTab] = useState<'payoneer' | 'wire' | 'qi' | 'crypto'>('payoneer')
@@ -145,12 +147,11 @@ const DonateModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ textAlign: 'center' }}>
                 <div style={{ 
                   background: 'white', padding: '12px', borderRadius: '16px', 
-                  display: 'inline-block', marginBottom: '16px' 
+                  display: 'inline-block', marginBottom: '16px',
+                  boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+                  border: '1px solid rgba(255,255,255,0.1)'
                 }}>
-                  {/* Placeholder for QR Code */}
-                  <div style={{ width: '180px', height: '180px', background: '#f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <QrCode size={100} color="#333" />
-                  </div>
+                  <img src={SuperQiQR} alt="Super Qi QR Code" style={{ width: '180px', height: '180px', display: 'block', borderRadius: '8px' }} />
                 </div>
                 <p style={{ color: 'var(--text-dim)', fontSize: '14px' }}>Scan with Super Qi App</p>
               </motion.div>
@@ -161,12 +162,11 @@ const DonateModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
                 <p style={{ color: 'var(--text-dim)', fontSize: '12px', marginBottom: '12px' }}>USDT (TRC20) Address</p>
                 <div style={{ 
                   background: 'white', padding: '12px', borderRadius: '16px', 
-                  display: 'inline-block', marginBottom: '16px' 
+                  display: 'inline-block', marginBottom: '16px',
+                  boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+                  border: '1px solid rgba(255,255,255,0.1)'
                 }}>
-                  {/* Placeholder for QR Code */}
-                  <div style={{ width: '180px', height: '180px', background: '#f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <QrCode size={100} color="#333" />
-                  </div>
+                  <img src={UsdtQR} alt="USDT QR Code" style={{ width: '180px', height: '180px', display: 'block', borderRadius: '8px' }} />
                 </div>
                 <div 
                   onClick={() => copyToClipboard('TUUeqeUP5ZAr7V8KVciHfBfvUVj8TsTtTL', 'USDT Address')}
