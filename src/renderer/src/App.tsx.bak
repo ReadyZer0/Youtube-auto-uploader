@@ -1,0 +1,87 @@
+import React, { useState, useEffect } from 'react'
+import { LayoutDashboard, Settings, Key, Activity } from 'lucide-react'
+import Dashboard from './components/Dashboard'
+import SettingsPage from './components/Settings'
+import AuthPage from './components/Auth'
+
+const App = () => {
+  const [activeTab, setActiveTab] = useState('dashboard')
+  const [config, setConfig] = useState<any>(null)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+
+  const loadConfig = async () => {
+    const cfg = await (window as any).api.getConfig()
+    setConfig(cfg)
+    const authed = await (window as any).api.isAuthenticated()
+    setIsAuthenticated(authed)
+  }
+
+  useEffect(() => {
+    loadConfig()
+  }, [])
+
+  const handleConfigChange = async (newConfig: any) => {
+    await (window as any).api.setConfig(newConfig)
+    setConfig({ ...config, ...newConfig })
+  }
+
+  return (
+    <div className="app-container">
+      <div className="sidebar">
+        <div className="sidebar-title">
+          <img src="../../resources/icon.png?asset" alt="Logo" style={{ width: 32, height: 32, borderRadius: 8 }} />
+          <span>Ready Auto YT</span>
+        </div>
+        
+        <div 
+          className={`nav-item ${activeTab === 'dashboard' ? 'active' : ''}`}
+          onClick={() => setActiveTab('dashboard')}
+        >
+          <LayoutDashboard size={20} />
+          Dashboard
+        </div>
+        
+        <div 
+          className={`nav-item ${activeTab === 'settings' ? 'active' : ''}`}
+          onClick={() => setActiveTab('settings')}
+        >
+          <Settings size={20} />
+          Settings
+        </div>
+        
+        <div 
+          className={`nav-item ${activeTab === 'auth' ? 'active' : ''}`}
+          onClick={() => setActiveTab('auth')}
+        >
+          <Key size={20} />
+          YouTube Auth
+        </div>
+
+        <div style={{ marginTop: 'auto', padding: '20px 24px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', color: isAuthenticated ? 'var(--success)' : 'var(--error)' }}>
+            <Activity size={12} />
+            {isAuthenticated ? 'Authenticated' : 'Not Connected'}
+          </div>
+        </div>
+      </div>
+
+      <div className="main-viewport">
+        {activeTab === 'dashboard' && <Dashboard />}
+        {activeTab === 'settings' && (
+          <SettingsPage 
+            config={config} 
+            onChange={handleConfigChange} 
+          />
+        )}
+        {activeTab === 'auth' && (
+          <AuthPage 
+            config={config} 
+            onAuthSuccess={loadConfig} 
+          />
+        )}
+      </div>
+    </div>
+  )
+}
+
+export default App
