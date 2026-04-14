@@ -2,6 +2,12 @@
 
 An Electron desktop app that automatically uploads video files from a watched folder to YouTube, built with React and TypeScript.
 
+## 📥 Quick Setup (Recommended)
+**No coding required.** Directly download the latest Windows installer:
+👉 **[Download Latest Ready Auto YT Setup (.exe)](https://github.com/ReadyZer0/Youtube-auto-uploader/releases/latest)**
+
+---
+
 ## ✨ Features
 
 - 🔗 **Official YouTube Account Linking** — Connects to your actual YouTube Channel via the official OAuth2 flow
